@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
 {
@@ -9,6 +8,7 @@ namespace ChronoPlus.Lightweight.Windows
     {
         private bool DisplayForm = false;
         private bool AllowClose = false;
+        private bool AnimationGoing = false;
         private Rectangle screenBounds;
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -30,20 +30,26 @@ namespace ChronoPlus.Lightweight.Windows
         private void ShowWindow()
         {
             this.DisplayForm = true;
+            this.Focus();
             this.Visible = true;
+            this.Activate();
         }
         private void HideWindow()
         {
+            this.Location = this.InvisiblePoint;
+            HideLoadingComponents();
             this.DisplayForm = false;
             this.Visible = false;
         }
         // Performs pop-up animation of the form
         private async Task DisplayAnimation(double speed = 30)
         {
+            this.AnimationGoing = true;
+            
             Point formPoint = new Point(screenBounds.Width - this.Width, screenBounds.Height);
-            this.Location = formPoint;
             ShowWindow();
-            int wantedHeight = screenBounds.Height - this.Height;
+            this.Location = formPoint;
+            int wantedHeight = screenBounds.Height - this.Height - 30; // taskbar height
 
             for (double i = screenBounds.Height; i >= wantedHeight; i -= speed)
             {
@@ -55,6 +61,10 @@ namespace ChronoPlus.Lightweight.Windows
                 }
                 await Task.Delay(20);
             }
+
+            this.Focus();
+            this.AnimationGoing = false;
+            InitializeChronoComponents();
         }
 
         private double CalculateFluentAnimationSpeed(double i, double wantedHeight)
