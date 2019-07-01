@@ -9,7 +9,7 @@ namespace ChronoPlus.Console
         public static void Main(string[] args)
         {
             var controller = new ChronoControl();
-            var info = controller.SpinCoin();
+            var info = controller.CheckUser();
 
             //System.Console.WriteLine(info.Chest.RewardValue + info.Chest.RewardBonus);
             //System.Console.WriteLine(info.Quest.RewardValue + info.Chest.RewardBonus);

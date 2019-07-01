@@ -5,19 +5,22 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
 {
     public partial class Window : MetroForm
     {
-        private readonly string ChronoLocation = AppDomain.CurrentDomain.BaseDirectory;
+        public static Window currentWindow;
         private Point InvisiblePoint;
         
         public Window()
         {
             InitializeComponent();
+            currentWindow = this;
             this.ControlBox = false; // removes minimize, maximize and exit buttons
             this.Movable = false;
             this.Resizable = false;
@@ -26,6 +29,7 @@ namespace ChronoPlus.Lightweight.Windows
             // and closing the application
             IconAndDisplayInitialize();
 
+            DisplayAnimation();
         }
 
         private void IconAndDisplayInitialize()
@@ -35,24 +39,17 @@ namespace ChronoPlus.Lightweight.Windows
             // Move the form outside the screen to prevent flashing when showing
             this.InvisiblePoint = new Point(screenBounds.Width, screenBounds.Height);
             this.Location = this.InvisiblePoint;
-
-            if (File.Exists(Path.Combine(this.ChronoLocation, "Resources/icon.ico")))
-            {
-                icon.Icon = new Icon(Path.Combine(this.ChronoLocation, "Resources/icon.ico"));
-            }
-            else
-            {
-                MessageBox.Show("Error! Mandatory file icon.ico not found.", "Error", MessageBoxButtons.OK);
-                Process.GetCurrentProcess().Kill();
-            }
-            icon.MouseUp += NotifyIcon_Click;
-
-            // Initializing contextmenu and adding the button Exit to exit the program
-            this.icon.ContextMenu = new ContextMenu();
-            var iconExitMenuItem = this.icon.ContextMenu.MenuItems.Add("Exit");
-            iconExitMenuItem.Click += NotifyIcon_CloseClicked;
-            icon.Visible = true;
         }
-        
+
+        public static void Kill()
+        {
+            currentWindow.DisposeComponents();
+            currentWindow.Dispose();
+            currentWindow = null;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
     }
 }

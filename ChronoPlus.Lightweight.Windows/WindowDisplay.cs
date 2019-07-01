@@ -1,48 +1,29 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
 {
     public partial class Window
     {
-        private bool DisplayForm = false;
-        private bool AllowClose = false;
         private bool AnimationGoing = false;
         private Rectangle screenBounds;
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (!this.AllowClose)
-            {
-                e.Cancel = true;
-                this.Hide();
-            }
-            else
-            {
-                this.icon.Dispose();
-            }
-        }
-        protected override void SetVisibleCore(bool value)
-        {
-            base.SetVisibleCore(this.DisplayForm ? value : this.DisplayForm);
-        }
 
-        private void ShowWindow()
+        public void ShowWindow()
         {
-            this.DisplayForm = true;
             this.Focus();
             this.Visible = true;
             this.Activate();
         }
-        private void HideWindow()
+        public void CloseWindow()
         {
-            this.Location = this.InvisiblePoint;
-            HideLoadingComponents();
-            this.DisplayForm = false;
-            this.Visible = false;
+            Window.Kill();
         }
         // Performs pop-up animation of the form
-        private async Task DisplayAnimation(double speed = 30)
+        public async Task DisplayAnimation(double speed = 30)
         {
             this.AnimationGoing = true;
             

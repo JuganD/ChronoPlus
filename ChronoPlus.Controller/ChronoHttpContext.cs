@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net.Http;
 using ChronoPlus.Controller.Abstraction;
 
@@ -6,6 +7,10 @@ namespace ChronoPlus.Controller
 {
     public class ChronoHttpContext : IChronoHttpInformation, IDisposable
     {
+        internal ChronoHttpContext(object annonimusObject, HttpResponseMessage response, string jsonResponse)
+        {
+            this.Model = (IChronoInformationSegment)annonimusObject;
+        }
         internal ChronoHttpContext(IChronoInformationSegment model, HttpResponseMessage response, string jsonResponse)
             : this(response, jsonResponse)
         {

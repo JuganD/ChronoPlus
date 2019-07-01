@@ -12,7 +12,7 @@ namespace ChronoPlus.Controller
         {
             var jsonResponse = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             //string testString = "{\"quest\":{\"_id\":-1,\"name\":\"default\",\"earns\":\"coins\",\"kind\":\"daily\",\"value\":20,\"bonus\":6},\"chest\":{\"base\":125,\"bonus\":31,\"kind\":3}}";
-            //string testString2 =
+            //string jsonResponse =
             //"{\"quest\":{\"_id\":-1,\"name\":\"default\",\"earns\":\"coins\",\"kind\":\"daily\",\"value\":20,\"bonus\":9},\"chest\":{}}";
             try
             {
@@ -31,7 +31,15 @@ namespace ChronoPlus.Controller
             }
             catch (JsonException)
             {
-                return new ChronoHttpContext(response, jsonResponse);
+                try
+                {
+                    var annonimusObject = JsonConvert.DeserializeObject(jsonResponse);
+                    return new ChronoHttpContext(annonimusObject, response, jsonResponse);
+                }
+                catch
+                {
+                    return new ChronoHttpContext(response, jsonResponse);
+                }
             }
         }
     }

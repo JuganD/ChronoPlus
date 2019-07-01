@@ -13,13 +13,12 @@ namespace ChronoPlus.Lightweight.Windows
     {
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
-
             if (m.Msg == 0x86 && this.Visible && !this.AnimationGoing) //NativeConstants.WM_NCACTIVATE
             { 
                 if (!this.RectangleToScreen(this.DisplayRectangle).Contains(Cursor.Position))// click outside the form's window
-                    HideWindow();
+                    CloseWindow();
             }
+            base.WndProc(ref m);
         }
     }
 }
