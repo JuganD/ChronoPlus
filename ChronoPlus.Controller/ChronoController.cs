@@ -118,7 +118,7 @@ namespace ChronoPlus.Controller
 
         private void InterpretResult()
         {
-            Enum.TryParse(this.HttpContext.Response.StatusCode.ToString(), out this.ResponseResult);
+            Enum.TryParse(((int)this.HttpContext.Response.StatusCode).ToString(), out this.ResponseResult);
         }
 
 

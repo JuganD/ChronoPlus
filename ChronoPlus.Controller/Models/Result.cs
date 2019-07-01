@@ -4,7 +4,7 @@
     {
         // TODO: test this
         Unknown = 0, // 0 because sometimes tryparse fails and returns unexpected result (for testing purpose)
-        Rolled = 200,
+        Completed = 200,
         InvalidToken = 401,
         Cooldown = 420
     }

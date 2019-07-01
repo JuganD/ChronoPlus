@@ -29,7 +29,7 @@ namespace ChronoPlus.Controller
                         return new ChronoHttpContext(response, jsonResponse);
                 }
             }
-            catch (JsonSerializationException)
+            catch (JsonException)
             {
                 return new ChronoHttpContext(response, jsonResponse);
             }
