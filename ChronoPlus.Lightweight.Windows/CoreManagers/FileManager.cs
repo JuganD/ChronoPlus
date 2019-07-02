@@ -7,22 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ChronoPlus.Lightweight.Windows
+namespace ChronoPlus.Lightweight.Windows.CoreManagers
 {
-    public class FileManager
+    public class FileManager : LocationVariables
     {
-        private const string CodeFileName = "jwt.cplus";
-        private const string FolderName = "ChronoPlus";
-        public readonly string AppDataLocation;
-        public readonly string AppDataFolderLocation;
-        public readonly string CodeLocation;
         public bool IsJwtPresent => File.Exists(this.CodeLocation);
 
         public FileManager()
         {
-            this.AppDataLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            this.AppDataFolderLocation = Path.Combine(this.AppDataLocation, FolderName);
-            this.CodeLocation = Path.Combine(this.AppDataFolderLocation, CodeFileName);
             EnsureFolderIsPresent();
         }
 
@@ -78,13 +70,13 @@ namespace ChronoPlus.Lightweight.Windows
             }
             return null;
         }
-        private void EnsureFolderIsPresent()
+        protected void EnsureFolderIsPresent()
         {
-            if (!Directory.Exists(this.AppDataFolderLocation))
+            if (!Directory.Exists(this.AppDataChronoFolderLocation))
             {
                 try
                 {
-                    Directory.CreateDirectory(this.AppDataFolderLocation);
+                    Directory.CreateDirectory(this.AppDataChronoFolderLocation);
                 }
                 catch (UnauthorizedAccessException)
                 {
@@ -92,12 +84,6 @@ namespace ChronoPlus.Lightweight.Windows
                     Window.Kill();
                 }
             }
-        }
-
-        private static void AccessErrorMessage()
-        {
-            MessageBox.Show("Error: Access denied! Please run the application with administrator privileges.",
-                "Fatal Error", MessageBoxButtons.OK);
         }
     }
 }

@@ -20,16 +20,13 @@ namespace ChronoPlus.Lightweight.Windows
             this.Movable = false;
             this.Resizable = false;
 
-            TimeSpan t = TimeSpan.FromMilliseconds(TimerManager.GetRemainingTime());
-            string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
-                                    t.Hours,
-                                    t.Minutes,
-                                    t.Seconds);
-
-            this.nextRollTime.Text = time;
-            // Initializes the icon, loading the ICO and creating methods for hiding, showing
-            // and closing the application
+            SetNextRollTime();
             ScreenBoundsAndPointInitialize();
+            
+            // Config
+            InitializeAllConfigValues();
+            BindAllToggles();
+
 
             this.ManualControl = manual;
 
@@ -53,6 +50,7 @@ namespace ChronoPlus.Lightweight.Windows
         {
             try
             {
+                currentWindow.SaveAllConfigValues();
                 currentWindow.DisposeComponents();
                 currentWindow.Dispose();
                 currentWindow = null;
@@ -64,7 +62,6 @@ namespace ChronoPlus.Lightweight.Windows
             {
 
             }
-            
         }
     }
 }

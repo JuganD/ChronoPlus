@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace ChronoPlus.Lightweight.Windows.CoreManagers
 {
-    public class TimerManager  // implement Idisposable
+    public class TimerManager
     {
         private System.Windows.Forms.Timer timer;
         public TimerManager()
@@ -16,8 +16,9 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
             timer.Interval = GetRemainingTime();
             timer.Tick += CallBack;
             timer.Start();
+            CallBack(null, null);
         }
-        private async void CallBack(object sender, EventArgs e)
+        private void CallBack(object sender, EventArgs e)
         {
             timer.Stop();
 
@@ -49,19 +50,28 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
                     //};
                     if (spinInfo != null)
                     {
-                        if (spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue != 0)
+                        int questCoins = spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue;
+                        int chestCoins = spinInfo.Chest.RewardBonus + spinInfo.Chest.RewardValue;
+                        if (questCoins > 0)
                         {
-                            this.timer.Interval = GetRemainingTime();
-                            timer.Start();
-
-                            Window wind = new Window(true);
-                            await wind?.DisplayPopUpAnimation();
-                            await wind?.GetChronoSpinModel(jwt);
-                            wind?.PresentChronoSpinModel(spinInfo);
+                            Window.InsertedLabels.Add("[2]Last coin spin");
+                            Window.InsertedLabels.Add("    From daily spin: " + questCoins);
+                            if (chestCoins > 0)
+                            {
+                                Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
+                            }
+                            // TODO: add option to raise information in window
+                            //Window wind = new Window(true);
+                            //await wind?.DisplayPopUpAnimation();
+                            //await wind?.GetChronoSpinModel(jwt);
+                            //wind?.PresentChronoSpinModel(spinInfo);
                         }
                     }
                 }
             }
+
+            this.timer.Interval = GetRemainingTime();
+            timer.Start();
         }
 
         public static int GetRemainingTime()

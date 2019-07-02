@@ -1,9 +1,5 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-using System.Net.Mime;
-using System.Threading;
+﻿using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
 {
@@ -65,5 +61,6 @@ namespace ChronoPlus.Lightweight.Windows
 
             return 0.9;
         }
+
     }
 }

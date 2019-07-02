@@ -23,7 +23,13 @@ namespace ChronoPlus.Lightweight.Windows
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            TimerManager timerManager = new TimerManager();
+            ConfigManager configManager = new ConfigManager();
+            configManager.LoadConfig();
+
+            if (configManager.GetConfigValue("autoSpinToggle") != false)
+            {
+                TimerManager timerManager = new TimerManager();
+            }
             IconManager iconManager = new IconManager();
 
             Application.Run();
@@ -31,7 +37,7 @@ namespace ChronoPlus.Lightweight.Windows
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            
+
         }
 
         internal static void StartNewWindow()

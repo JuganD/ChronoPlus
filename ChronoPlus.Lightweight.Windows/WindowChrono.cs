@@ -8,6 +8,7 @@ using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChronoPlus.Controller.Models;
+using ChronoPlus.Lightweight.Windows.CoreManagers;
 using MetroFramework;
 using MetroFramework.Controls;
 using MetroFramework.Interfaces;
@@ -17,6 +18,7 @@ namespace ChronoPlus.Lightweight.Windows
 {
     public partial class Window
     {
+        public static List<string> InsertedLabels = new List<string>();
         // Its void for a reason, okay?
         private async void InitializeChronoComponents(string jwt = null)
         {
@@ -45,26 +47,7 @@ namespace ChronoPlus.Lightweight.Windows
 
         public void PresentChronoCheckModel(ChronoCheckInformationModel model)
         {
-            MetroLabel[] labels = new MetroLabel[3];
-
-            Point location = new Point(0, 0);
-            int incremetor = this.informationPanel.Height / labels.Length;
-
-            for (int i = 0; i < labels.Length; i++)
-            {
-                labels[i] = new MetroLabel
-                {
-                    Theme = MetroThemeStyle.Dark,
-                    LabelMode = MetroLabelMode.Selectable,
-                    AutoSize = true,
-                    FontSize = MetroLabelSize.Tall,
-                    Location = location
-                };
-                this.informationPanel.Controls.Add(labels[i]);
-
-                location.Y += incremetor + labels[i].Height;
-            }
-
+            List<MetroLabel> labels = (List<MetroLabel>)InsertLabelsToPanel(3, true);
 
             ChangeLabelText(labels[0], "Email: " + model.Email);
             ChangeLabelText(labels[1], "Coins: " + model.Coins.Balance.ToString());
@@ -77,26 +60,7 @@ namespace ChronoPlus.Lightweight.Windows
 
         public void PresentChronoSpinModel(ChronoCoinInformationModel model)
         {
-            MetroLabel[] labels = new MetroLabel[2];
-
-            Point location = new Point(0, 0);
-            int incremetor = this.informationPanel.Height / labels.Length;
-
-            for (int i = 0; i < labels.Length; i++)
-            {
-                labels[i] = new MetroLabel
-                {
-                    Theme = MetroThemeStyle.Dark,
-                    LabelMode = MetroLabelMode.Selectable,
-                    AutoSize = true,
-                    FontSize = MetroLabelSize.Tall,
-                    Location = location
-                };
-                this.informationPanel.Controls.Add(labels[i]);
-                this.DoubleBuffered = true;
-                this.informationPanel.Refresh();
-                location.Y += incremetor + labels[i].Height;
-            }
+            List<MetroLabel> labels = (List<MetroLabel>)InsertLabelsToPanel(2);
 
             ChangeLabelText(labels[0], "Quest coins: " + (model.Quest.RewardValue + model.Quest.RewardBonus));
             ChangeLabelText(labels[1], "Chest coins: " + (model.Chest.RewardValue + model.Chest.RewardBonus));
@@ -114,6 +78,61 @@ namespace ChronoPlus.Lightweight.Windows
                 }
                 catch { }
             }
+        }
+        public ICollection<MetroLabel> InsertLabelsToPanel(int count, bool insertAdditional = false)
+        {
+            List<MetroLabel> labelsToAdd = new List<MetroLabel>();
+            for (int i = 0; i < count; i++)
+            {
+                labelsToAdd.Add(new MetroLabel());
+            }
+
+            if (insertAdditional)
+            {
+                foreach (var label in InsertedLabels)
+                {
+                    labelsToAdd.Add(new MetroLabel()
+                    {
+                        Text = label
+                    });
+                }
+            }
+
+            Point location = new Point(0, 0);
+            int incrementor = this.informationPanel.Height / labelsToAdd.Count;
+            int subCounter = 0;
+            for (int i = 0; i < labelsToAdd.Count; i++)
+            {
+                labelsToAdd[i].Theme = MetroThemeStyle.Dark;
+                labelsToAdd[i].LabelMode = MetroLabelMode.Selectable;
+                labelsToAdd[i].AutoSize = true;
+                labelsToAdd[i].FontSize = MetroLabelSize.Tall;
+                labelsToAdd[i].Location = location;
+
+                this.informationPanel.Controls.Add(labelsToAdd[i]);
+
+                try
+                {
+                    if (labelsToAdd[i].Text != null &&
+                    labelsToAdd[i].Text.Length > 3 &&
+                    labelsToAdd[i].Text.Substring(0, 1) == "[" &&
+                    labelsToAdd[i].Text.Substring(2, 1) == "]")
+                    {
+                        subCounter = int.Parse(labelsToAdd[i].Text.Substring(1, 1)) + 1;
+                        labelsToAdd[i].Text = labelsToAdd[i].Text.Remove(0,3);
+                    }
+                }
+                catch { }
+
+                if (subCounter > 0)
+                {
+                    location.Y += labelsToAdd[i].Height;
+                    subCounter--;
+                }
+                else
+                    location.Y += incrementor;
+            }
+            return labelsToAdd;
         }
         public async Task<ChronoCheckInformationModel> GetChronoCheckModel(string jwt)
         {
@@ -198,6 +217,16 @@ namespace ChronoPlus.Lightweight.Windows
             await Task.Delay(50);
             this.progressSpinner.Hide();
             this.progressSpinner.Value = 0;
+        }
+        private void SetNextRollTime()
+        {
+            TimeSpan t = TimeSpan.FromMilliseconds(TimerManager.GetRemainingTime());
+            string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+                                    t.Hours,
+                                    t.Minutes,
+                                    t.Seconds);
+
+            this.nextRollTime.Text = time;
         }
     }
 }

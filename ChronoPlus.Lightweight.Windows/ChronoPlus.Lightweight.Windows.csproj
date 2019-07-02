@@ -62,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreManagers\ConfigManager.cs" />
     <Compile Include="CoreManagers\IconManager.cs" />
+    <Compile Include="CoreManagers\LocationVariables.cs" />
     <Compile Include="CoreManagers\TimerManager.cs" />
     <Compile Include="CoreManagers\FileManager.cs" />
     <Compile Include="Controller.cs" />
@@ -77,10 +79,16 @@
     <Compile Include="WindowChrono.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowConfigurationLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowMouseExit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WindowDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowToggleEventHandlers.cs">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
