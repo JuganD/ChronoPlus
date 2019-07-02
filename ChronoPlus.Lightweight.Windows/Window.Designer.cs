@@ -31,10 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.tile = new MetroFramework.Controls.MetroTile();
             this.informationPanel = new MetroFramework.Controls.MetroPanel();
+            this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
             this.autoSpinLabel = new MetroFramework.Controls.MetroLabel();
             this.autoSpinToggle = new MetroFramework.Controls.MetroToggle();
-            this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
+            this.nextRoll = new MetroFramework.Controls.MetroLabel();
+            this.nextRollTime = new MetroFramework.Controls.MetroLabel();
             this.informationPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -72,8 +74,22 @@
             this.informationPanel.VerticalScrollbarSize = 10;
             this.informationPanel.Visible = false;
             // 
+            // progressSpinner
+            // 
+            this.progressSpinner.Location = new System.Drawing.Point(114, 42);
+            this.progressSpinner.Maximum = 100;
+            this.progressSpinner.Name = "progressSpinner";
+            this.progressSpinner.Size = new System.Drawing.Size(231, 208);
+            this.progressSpinner.Speed = 2F;
+            this.progressSpinner.TabIndex = 2;
+            this.progressSpinner.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.progressSpinner.UseSelectable = true;
+            this.progressSpinner.Visible = false;
+            // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.nextRollTime);
+            this.buttonsPanel.Controls.Add(this.nextRoll);
             this.buttonsPanel.Controls.Add(this.autoSpinLabel);
             this.buttonsPanel.Controls.Add(this.autoSpinToggle);
             this.buttonsPanel.HorizontalScrollbarBarColor = true;
@@ -114,17 +130,27 @@
             this.autoSpinToggle.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.autoSpinToggle.UseSelectable = true;
             // 
-            // progressSpinner
+            // nextRoll
             // 
-            this.progressSpinner.Location = new System.Drawing.Point(114, 42);
-            this.progressSpinner.Maximum = 100;
-            this.progressSpinner.Name = "progressSpinner";
-            this.progressSpinner.Size = new System.Drawing.Size(231, 208);
-            this.progressSpinner.Speed = 2F;
-            this.progressSpinner.TabIndex = 2;
-            this.progressSpinner.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.progressSpinner.UseSelectable = true;
-            this.progressSpinner.Visible = false;
+            this.nextRoll.AutoSize = true;
+            this.nextRoll.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.nextRoll.Location = new System.Drawing.Point(14, 42);
+            this.nextRoll.Name = "nextRoll";
+            this.nextRoll.Size = new System.Drawing.Size(95, 25);
+            this.nextRoll.TabIndex = 7;
+            this.nextRoll.Text = "Next roll in";
+            this.nextRoll.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // nextRollTime
+            // 
+            this.nextRollTime.AutoSize = true;
+            this.nextRollTime.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.nextRollTime.Location = new System.Drawing.Point(166, 42);
+            this.nextRollTime.Name = "nextRollTime";
+            this.nextRollTime.Size = new System.Drawing.Size(106, 25);
+            this.nextRollTime.TabIndex = 8;
+            this.nextRollTime.Text = "00h:00m:00s";
+            this.nextRollTime.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // Window
             // 
@@ -155,6 +181,8 @@
         private MetroFramework.Controls.MetroLabel autoSpinLabel;
         private MetroFramework.Controls.MetroToggle autoSpinToggle;
         private MetroFramework.Controls.MetroProgressSpinner progressSpinner;
+        private MetroFramework.Controls.MetroLabel nextRollTime;
+        private MetroFramework.Controls.MetroLabel nextRoll;
     }
 }
 

@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
@@ -61,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManager.cs" />
+    <Compile Include="CoreManagers\IconManager.cs" />
+    <Compile Include="CoreManagers\TimerManager.cs" />
+    <Compile Include="CoreManagers\FileManager.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
@@ -118,7 +121,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
     <Content Include="Resources\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

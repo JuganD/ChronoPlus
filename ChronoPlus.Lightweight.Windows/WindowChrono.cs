@@ -20,9 +20,6 @@ namespace ChronoPlus.Lightweight.Windows
         // Its void for a reason, okay?
         private async void InitializeChronoComponents(string jwt = null)
         {
-            this.informationPanel.Visible = true;
-            this.progressSpinner.Visible = true;
-
             if (string.IsNullOrEmpty(jwt))
             {
                 FileManager fm = new FileManager();
@@ -46,7 +43,7 @@ namespace ChronoPlus.Lightweight.Windows
             }
         }
 
-        private void PresentChronoCheckModel(ChronoCheckInformationModel model)
+        public void PresentChronoCheckModel(ChronoCheckInformationModel model)
         {
             MetroLabel[] labels = new MetroLabel[3];
 
@@ -68,15 +65,57 @@ namespace ChronoPlus.Lightweight.Windows
                 location.Y += incremetor + labels[i].Height;
             }
 
-            labels[0].Text = "Email: " + model.Email;
-            labels[1].Text = "Coins: " + model.Coins.Balance.ToString();
-            labels[2].Text = "Last Spin: " + model.Coins.LastSpin.ToLocalTime().ToString(CultureInfo.CurrentCulture);
+
+            ChangeLabelText(labels[0], "Email: " + model.Email);
+            ChangeLabelText(labels[1], "Coins: " + model.Coins.Balance.ToString());
+            ChangeLabelText(labels[2], "Last Spin: " + model.Coins.LastSpin.ToLocalTime()
+                                 .ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
 
             labels = null;
             this.informationPanel.Visible = true;
         }
 
-        private async Task<ChronoCheckInformationModel> GetChronoCheckModel(string jwt)
+        public void PresentChronoSpinModel(ChronoCoinInformationModel model)
+        {
+            MetroLabel[] labels = new MetroLabel[2];
+
+            Point location = new Point(0, 0);
+            int incremetor = this.informationPanel.Height / labels.Length;
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i] = new MetroLabel
+                {
+                    Theme = MetroThemeStyle.Dark,
+                    LabelMode = MetroLabelMode.Selectable,
+                    AutoSize = true,
+                    FontSize = MetroLabelSize.Tall,
+                    Location = location
+                };
+                this.informationPanel.Controls.Add(labels[i]);
+                this.DoubleBuffered = true;
+                this.informationPanel.Refresh();
+                location.Y += incremetor + labels[i].Height;
+            }
+
+            ChangeLabelText(labels[0], "Quest coins: " + (model.Quest.RewardValue + model.Quest.RewardBonus));
+            ChangeLabelText(labels[1], "Chest coins: " + (model.Chest.RewardValue + model.Chest.RewardBonus));
+
+            labels = null;
+            this.informationPanel.Visible = true;
+        }
+        private void ChangeLabelText(MetroLabel label, string text)
+        {
+            if (label != null && !label.IsDisposed && !label.Disposing)
+            {
+                try
+                {
+                    label.Text = text;
+                }
+                catch { }
+            }
+        }
+        public async Task<ChronoCheckInformationModel> GetChronoCheckModel(string jwt)
         {
             using (Controller controller = new Controller(jwt))
             {
@@ -93,6 +132,23 @@ namespace ChronoPlus.Lightweight.Windows
                 return model;
             }
         }
+        public async Task<ChronoCoinInformationModel> GetChronoSpinModel(string jwt)
+        {
+            using (Controller controller = new Controller(jwt))
+            {
+                Task<ChronoCoinInformationModel> userInfo = Task.Run(() => controller.SpinCoin());
+
+                while (!userInfo.IsCompleted)
+                {
+                    await ProgressSpinnerSpin();
+                }
+                ChronoCoinInformationModel model = await userInfo;
+                ProgressSpinnerComplete();
+                userInfo.Dispose();
+
+                return model;
+            }
+        }
         private void DisposeComponents()
         {
             this.progressSpinner.Visible = false;
@@ -102,6 +158,12 @@ namespace ChronoPlus.Lightweight.Windows
 
         private async Task ProgressSpinnerSpin()
         {
+            if (this.informationPanel.Visible == false || this.progressSpinner.Visible == false)
+            {
+                this.informationPanel.Visible = true;
+                this.progressSpinner.Visible = true;
+            }
+
             if (this.progressSpinner.Value == 0)
             {
                 for (int i = 0; i <= 100; i += 1)

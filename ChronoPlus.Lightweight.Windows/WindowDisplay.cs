@@ -23,10 +23,10 @@ namespace ChronoPlus.Lightweight.Windows
             Window.Kill();
         }
         // Performs pop-up animation of the form
-        public async Task DisplayAnimation(double speed = 30)
+        public async Task DisplayPopUpAnimation(double speed = 30)
         {
             this.AnimationGoing = true;
-            
+
             Point formPoint = new Point(screenBounds.Width - this.Width, screenBounds.Height);
             ShowWindow();
             this.Location = formPoint;
@@ -45,7 +45,6 @@ namespace ChronoPlus.Lightweight.Windows
 
             this.Focus();
             this.AnimationGoing = false;
-            InitializeChronoComponents();
         }
 
         private double CalculateFluentAnimationSpeed(double i, double wantedHeight)

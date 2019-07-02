@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using MetroFramework.Controls;
+using ChronoPlus.Lightweight.Windows.CoreManagers;
 using MetroFramework.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
@@ -16,8 +10,9 @@ namespace ChronoPlus.Lightweight.Windows
     {
         public static Window currentWindow;
         private Point InvisiblePoint;
+        private bool ManualControl;
         
-        public Window()
+        public Window(bool manual = false)
         {
             InitializeComponent();
             currentWindow = this;
@@ -25,14 +20,27 @@ namespace ChronoPlus.Lightweight.Windows
             this.Movable = false;
             this.Resizable = false;
 
+            TimeSpan t = TimeSpan.FromMilliseconds(TimerManager.GetRemainingTime());
+            string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+                                    t.Hours,
+                                    t.Minutes,
+                                    t.Seconds);
+
+            this.nextRollTime.Text = time;
             // Initializes the icon, loading the ICO and creating methods for hiding, showing
             // and closing the application
-            IconAndDisplayInitialize();
+            ScreenBoundsAndPointInitialize();
 
-            DisplayAnimation();
+            this.ManualControl = manual;
+
+            if (!this.ManualControl)
+            {
+                DisplayPopUpAnimation();
+                InitializeChronoComponents();
+            }
         }
 
-        private void IconAndDisplayInitialize()
+        private void ScreenBoundsAndPointInitialize()
         {
             this.screenBounds = Screen.FromControl(this).Bounds;
 
@@ -43,13 +51,20 @@ namespace ChronoPlus.Lightweight.Windows
 
         public static void Kill()
         {
-            currentWindow.DisposeComponents();
-            currentWindow.Dispose();
-            currentWindow = null;
+            try
+            {
+                currentWindow.DisposeComponents();
+                currentWindow.Dispose();
+                currentWindow = null;
 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            } catch
+            {
+
+            }
+            
         }
     }
 }

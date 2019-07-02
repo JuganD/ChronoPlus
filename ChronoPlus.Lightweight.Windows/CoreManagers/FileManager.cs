@@ -16,6 +16,7 @@ namespace ChronoPlus.Lightweight.Windows
         public readonly string AppDataLocation;
         public readonly string AppDataFolderLocation;
         public readonly string CodeLocation;
+        public bool IsJwtPresent => File.Exists(this.CodeLocation);
 
         public FileManager()
         {
@@ -52,7 +53,7 @@ namespace ChronoPlus.Lightweight.Windows
         {
             try
             {
-                if (File.Exists(this.CodeLocation))
+                if (IsJwtPresent)
                 {
                     string line;
                     using (StreamReader sr = new StreamReader(this.CodeLocation))
