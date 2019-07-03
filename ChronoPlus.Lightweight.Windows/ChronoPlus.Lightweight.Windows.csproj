@@ -7,7 +7,7 @@
     <ProjectGuid>{52E787DC-B20E-4C94-B170-7E62D361AB9C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ChronoPlus.Lightweight.Windows</RootNamespace>
-    <AssemblyName>ChronoPlus.Lightweight.Windows</AssemblyName>
+    <AssemblyName>ChronoPlus</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -65,6 +65,7 @@
     <Compile Include="CoreManagers\ConfigManager.cs" />
     <Compile Include="CoreManagers\IconManager.cs" />
     <Compile Include="CoreManagers\LocationVariables.cs" />
+    <Compile Include="CoreManagers\RegistryManager.cs" />
     <Compile Include="CoreManagers\TimerManager.cs" />
     <Compile Include="CoreManagers\FileManager.cs" />
     <Compile Include="Controller.cs" />

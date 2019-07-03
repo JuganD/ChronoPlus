@@ -7,7 +7,13 @@ namespace ChronoPlus.Lightweight.Windows
     {
         private void InitializeAllConfigValues()
         {
-            BindToggleFromConfig(this.autoSpinToggle);
+            foreach (var control in this.buttonsPanel.Controls)
+            {
+                if (control is MetroToggle)
+                {
+                    BindToggleFromConfig(control as MetroToggle);
+                }
+            }
         }
         private void SaveAllConfigValues()
         {

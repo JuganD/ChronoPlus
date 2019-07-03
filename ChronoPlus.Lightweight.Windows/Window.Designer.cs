@@ -40,6 +40,8 @@
             this.autoSpinToggle = new MetroFramework.Controls.MetroToggle();
             this.jwtTextBox = new MetroFramework.Controls.MetroTextBox();
             this.jwtButtonExit = new MetroFramework.Controls.MetroButton();
+            this.runOnStartupLabel = new MetroFramework.Controls.MetroLabel();
+            this.runOnStartupToggle = new MetroFramework.Controls.MetroToggle();
             this.informationPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -91,6 +93,8 @@
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.runOnStartupLabel);
+            this.buttonsPanel.Controls.Add(this.runOnStartupToggle);
             this.buttonsPanel.Controls.Add(this.jwtChangeButton);
             this.buttonsPanel.Controls.Add(this.nextRollTime);
             this.buttonsPanel.Controls.Add(this.nextRoll);
@@ -223,6 +227,31 @@
             this.jwtButtonExit.UseSelectable = true;
             this.jwtButtonExit.UseStyleColors = true;
             // 
+            // runOnStartupLabel
+            // 
+            this.runOnStartupLabel.AutoSize = true;
+            this.runOnStartupLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.runOnStartupLabel.Location = new System.Drawing.Point(14, 271);
+            this.runOnStartupLabel.Name = "runOnStartupLabel";
+            this.runOnStartupLabel.Size = new System.Drawing.Size(125, 25);
+            this.runOnStartupLabel.TabIndex = 13;
+            this.runOnStartupLabel.Text = "Run on startup";
+            this.runOnStartupLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // runOnStartupToggle
+            // 
+            this.runOnStartupToggle.AutoSize = true;
+            this.runOnStartupToggle.Checked = true;
+            this.runOnStartupToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.runOnStartupToggle.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.runOnStartupToggle.Location = new System.Drawing.Point(189, 277);
+            this.runOnStartupToggle.Name = "runOnStartupToggle";
+            this.runOnStartupToggle.Size = new System.Drawing.Size(80, 17);
+            this.runOnStartupToggle.TabIndex = 12;
+            this.runOnStartupToggle.Text = "On";
+            this.runOnStartupToggle.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.runOnStartupToggle.UseSelectable = true;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,6 +286,8 @@
         private MetroFramework.Controls.MetroButton jwtChangeButton;
         private MetroFramework.Controls.MetroTextBox jwtTextBox;
         private MetroFramework.Controls.MetroButton jwtButtonExit;
+        private MetroFramework.Controls.MetroLabel runOnStartupLabel;
+        private MetroFramework.Controls.MetroToggle runOnStartupToggle;
     }
 }
 

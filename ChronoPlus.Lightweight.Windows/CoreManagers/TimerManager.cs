@@ -21,7 +21,7 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
         private void CallBack(object sender, EventArgs e)
         {
             timer.Stop();
-            if (ConfigManager.GetConfigValue("autoSpinToggle") != false)
+            if (ConfigManager.GetConfigBool("autoSpinToggle") != false)
             {
                 if (Window.currentWindow != null)
                 {

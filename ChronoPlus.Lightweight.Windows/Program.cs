@@ -26,7 +26,6 @@ namespace ChronoPlus.Lightweight.Windows
             ConfigManager configManager = new ConfigManager();
             configManager.LoadConfig();
 
-
             TimerManager timerManager = new TimerManager();
             IconManager iconManager = new IconManager();
 

@@ -17,7 +17,7 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
             
         }
 
-        public static bool? GetConfigValue(string key)
+        public static bool? GetConfigBool(string key)
         {
             if (Config.ContainsKey(key))
             {

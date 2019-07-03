@@ -18,6 +18,7 @@ namespace ChronoPlus.Lightweight.Windows
                 if (toggle is MetroToggle)
                 {
                     (toggle as MetroToggle).CheckedChanged += Toggle_CheckedChanged;
+                    Toggle_CheckedChanged(toggle, null);
                 }
             }
         }
@@ -26,6 +27,23 @@ namespace ChronoPlus.Lightweight.Windows
         {
             MetroToggle toggle = (MetroToggle)sender;
             AddToggleToConfig(toggle);
+
+            CustomToggleCheckedProperties(toggle);
+        }
+        private void CustomToggleCheckedProperties(MetroToggle toggle)
+        {
+            if (toggle == this.runOnStartupToggle)
+            {
+                RegistryManager registryManager = new RegistryManager();
+                if (toggle.Checked)
+                {
+                    registryManager.AddProgramToStartup();
+                }
+                else
+                {
+                    registryManager.RemoveProgramFromStartup();
+                }
+            }
         }
     }
 }

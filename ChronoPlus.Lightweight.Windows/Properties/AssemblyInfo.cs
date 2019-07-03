@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChronoPlus.Lightweight.Windows")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ChronoPlus")]
+[assembly: AssemblyDescription("Lightweight request-response client for Chrono.gg API")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ChronoPlus.Lightweight.Windows")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct("ChronoPlus")]
+[assembly: AssemblyCopyright("ChronoPlus ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
