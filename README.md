@@ -1,6 +1,4 @@
-<br />
 <p align="center">
-
   <h3 align="center">Chrono+</h3>
   <p align="center">
     Simple lightweight request-response oriented agent for Chrono.gg API.
