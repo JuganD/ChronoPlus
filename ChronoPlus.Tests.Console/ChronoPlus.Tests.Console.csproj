@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <AssemblyName>ChronoPlus.Tests.Console</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
