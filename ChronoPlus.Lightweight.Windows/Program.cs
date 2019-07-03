@@ -26,10 +26,8 @@ namespace ChronoPlus.Lightweight.Windows
             ConfigManager configManager = new ConfigManager();
             configManager.LoadConfig();
 
-            if (configManager.GetConfigValue("autoSpinToggle") != false)
-            {
-                TimerManager timerManager = new TimerManager();
-            }
+
+            TimerManager timerManager = new TimerManager();
             IconManager iconManager = new IconManager();
 
             Application.Run();

@@ -21,55 +21,56 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
         private void CallBack(object sender, EventArgs e)
         {
             timer.Stop();
-
-            if (Window.currentWindow != null)
+            if (ConfigManager.GetConfigValue("autoSpinToggle") != false)
             {
-                Window.Kill();
-            }
-
-            FileManager fm = new FileManager();
-            if (fm.IsJwtPresent)
-            {
-                string jwt = fm.ReadJwt();
-                using (Controller controller = new Controller(jwt))
+                if (Window.currentWindow != null)
                 {
-                    ChronoCoinInformationModel spinInfo = controller.SpinCoin();
-                    // FOR TESTING PURPOSE
-                    //new ChronoCoinInformationModel()
-                    //{
-                    //    Chest = new ChronoCoinChestInformationModel()
-                    //    {
-                    //        RewardBonus = 5,
-                    //        RewardValue = 10
-                    //    },
-                    //    Quest = new ChronoCoinQuestInformationModel()
-                    //    {
-                    //        RewardValue = 7,
-                    //        RewardBonus = 3
-                    //    }
-                    //};
-                    if (spinInfo != null)
+                    Window.Kill();
+                }
+
+                FileManager fm = new FileManager();
+                if (fm.IsJwtPresent)
+                {
+                    string jwt = fm.ReadJwt();
+                    using (Controller controller = new Controller(jwt))
                     {
-                        int questCoins = spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue;
-                        int chestCoins = spinInfo.Chest.RewardBonus + spinInfo.Chest.RewardValue;
-                        if (questCoins > 0)
+                        ChronoCoinInformationModel spinInfo = controller.SpinCoin();
+                        // FOR TESTING PURPOSE
+                        //new ChronoCoinInformationModel()
+                        //{
+                        //    Chest = new ChronoCoinChestInformationModel()
+                        //    {
+                        //        RewardBonus = 5,
+                        //        RewardValue = 10
+                        //    },
+                        //    Quest = new ChronoCoinQuestInformationModel()
+                        //    {
+                        //        RewardValue = 7,
+                        //        RewardBonus = 3
+                        //    }
+                        //};
+                        if (spinInfo != null)
                         {
-                            Window.InsertedLabels.Add("[2]Last coin spin");
-                            Window.InsertedLabels.Add("    From daily spin: " + questCoins);
-                            if (chestCoins > 0)
+                            int questCoins = spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue;
+                            int chestCoins = spinInfo.Chest.RewardBonus + spinInfo.Chest.RewardValue;
+                            if (questCoins > 0)
                             {
-                                Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
+                                Window.InsertedLabels.Add("[2]Last coin spin");
+                                Window.InsertedLabels.Add("    From daily spin: " + questCoins);
+                                if (chestCoins > 0)
+                                {
+                                    Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
+                                }
+                                // TODO: add option to raise information in window
+                                //Window wind = new Window(true);
+                                //await wind?.DisplayPopUpAnimation();
+                                //await wind?.GetChronoSpinModel(jwt);
+                                //wind?.PresentChronoSpinModel(spinInfo);
                             }
-                            // TODO: add option to raise information in window
-                            //Window wind = new Window(true);
-                            //await wind?.DisplayPopUpAnimation();
-                            //await wind?.GetChronoSpinModel(jwt);
-                            //wind?.PresentChronoSpinModel(spinInfo);
                         }
                     }
                 }
             }
-
             this.timer.Interval = GetRemainingTime();
             timer.Start();
         }
