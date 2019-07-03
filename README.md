@@ -22,7 +22,7 @@
 ChronoPlus is timed voting and user information checking application for the website Chrono.gg. 
 
 The application is using every user individual account cookie and sending GET and POST requests toward the Chrono website, as any browser does.
-The main goal of the windows application (ChronoPlus.Lightweight.Windows) is high-performance and lightweight application, not ease of use or extensibility of the code.
+The main goal of the windows application (ChronoPlus.Lightweight.Windows) is to be high-performance and lightweight application, not ease of use or extensibility of the code.
 That being said, I'm aiming for best readability where possible.
 
 ## This application is not tool for malevolent actions as it is performing the same actions as entering the website from any browsing software.
