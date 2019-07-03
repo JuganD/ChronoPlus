@@ -20,39 +20,47 @@ namespace ChronoPlus.Lightweight.Windows
     {
         public static List<string> InsertedLabels = new List<string>();
         // Its void for a reason, okay?
-        private async void InitializeChronoComponents(string jwt = null)
+        private async void ApplyJwt(string jwt = null)
         {
             if (string.IsNullOrEmpty(jwt))
             {
                 FileManager fm = new FileManager();
                 jwt = fm.ReadJwt();
-            }
 
-            if (jwt != null)
-            {
-                this.autoSpinToggle.Enabled = true;
-                var model = await GetChronoCheckModel(jwt);
-                PresentChronoCheckModel(model);
+                if (jwt != null)
+                {
+                    this.autoSpinToggle.Enabled = true;
+                    this.jwtTextBox.Text = jwt; // for initial textbox fill if jwt is presented
+                    this.jwtLastValue = jwt;
+                    var model = await GetChronoCheckModel(jwt);
+                    PresentChronoCheckModel(model);
+                }
             }
             else
             {
-                this.autoSpinToggle.Enabled = false;
-                // TODO: get the jwt from the user
+                this.autoSpinToggle.Enabled = true;
                 FileManager fm = new FileManager();
-                fm.SaveJWT(
-                    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pc2h0b2RydWdvQGdtYWlsLmNvbSIsImlkIjoianVnYW5kIiwidWlkIjoiNWIyNTU1MDVlOGQ5MWIwMDExNzY5ZDg4IiwiaWF0IjoxNTU3MTI1NjcyLCJleHAiOjE1NjIzMDk2NzIsImF1ZCI6Imh0dHBzOi8vd3d3LmNocm9uby5nZyIsImlzcyI6Imh0dHBzOi8vYXBpLmNocm9uby5nZyIsImp0aSI6ImVmNjE0NzczYTVlMjRhY2VhYmE3ZTFmNmQxNDlmNzVlIn0.8O2PlgZLsID0WTpCQg_76kwWqC-uxo4trz_2s_Pa2Io");
-                InitializeChronoComponents();
+                fm.SaveJWT(jwt);
+                Kill();
+                Program.StartNewWindow();
             }
         }
 
         public void PresentChronoCheckModel(ChronoCheckInformationModel model)
         {
             List<MetroLabel> labels = (List<MetroLabel>)InsertLabelsToPanel(3, true);
+            try
+            {
+                ChangeLabelText(labels[0], "Email: " + model.Email);
+                ChangeLabelText(labels[1], "Coins: " + model.Coins.Balance.ToString());
+                ChangeLabelText(labels[2], "Last Spin: " + model.Coins.LastSpin.ToLocalTime()
+                                     .ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
+            }
+            catch
+            {
 
-            ChangeLabelText(labels[0], "Email: " + model.Email);
-            ChangeLabelText(labels[1], "Coins: " + model.Coins.Balance.ToString());
-            ChangeLabelText(labels[2], "Last Spin: " + model.Coins.LastSpin.ToLocalTime()
-                                 .ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
+            }
+
 
             labels = null;
             this.informationPanel.Visible = true;
@@ -119,7 +127,7 @@ namespace ChronoPlus.Lightweight.Windows
                     labelsToAdd[i].Text.Substring(2, 1) == "]")
                     {
                         subCounter = int.Parse(labelsToAdd[i].Text.Substring(1, 1)) + 1;
-                        labelsToAdd[i].Text = labelsToAdd[i].Text.Remove(0,3);
+                        labelsToAdd[i].Text = labelsToAdd[i].Text.Remove(0, 3);
                     }
                 }
                 catch { }
@@ -161,6 +169,7 @@ namespace ChronoPlus.Lightweight.Windows
                 {
                     await ProgressSpinnerSpin();
                 }
+                
                 ChronoCoinInformationModel model = await userInfo;
                 ProgressSpinnerComplete();
                 userInfo.Dispose();

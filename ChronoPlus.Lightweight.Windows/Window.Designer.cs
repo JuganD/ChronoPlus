@@ -33,10 +33,13 @@
             this.informationPanel = new MetroFramework.Controls.MetroPanel();
             this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
+            this.jwtChangeButton = new MetroFramework.Controls.MetroButton();
+            this.nextRollTime = new MetroFramework.Controls.MetroLabel();
+            this.nextRoll = new MetroFramework.Controls.MetroLabel();
             this.autoSpinLabel = new MetroFramework.Controls.MetroLabel();
             this.autoSpinToggle = new MetroFramework.Controls.MetroToggle();
-            this.nextRoll = new MetroFramework.Controls.MetroLabel();
-            this.nextRollTime = new MetroFramework.Controls.MetroLabel();
+            this.jwtTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.jwtButtonExit = new MetroFramework.Controls.MetroButton();
             this.informationPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -88,10 +91,13 @@
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.jwtChangeButton);
             this.buttonsPanel.Controls.Add(this.nextRollTime);
             this.buttonsPanel.Controls.Add(this.nextRoll);
             this.buttonsPanel.Controls.Add(this.autoSpinLabel);
             this.buttonsPanel.Controls.Add(this.autoSpinToggle);
+            this.buttonsPanel.Controls.Add(this.jwtTextBox);
+            this.buttonsPanel.Controls.Add(this.jwtButtonExit);
             this.buttonsPanel.HorizontalScrollbarBarColor = true;
             this.buttonsPanel.HorizontalScrollbarHighlightOnWheel = false;
             this.buttonsPanel.HorizontalScrollbarSize = 10;
@@ -104,6 +110,45 @@
             this.buttonsPanel.VerticalScrollbarBarColor = true;
             this.buttonsPanel.VerticalScrollbarHighlightOnWheel = false;
             this.buttonsPanel.VerticalScrollbarSize = 10;
+            // 
+            // jwtChangeButton
+            // 
+            this.jwtChangeButton.BackColor = System.Drawing.Color.PaleGreen;
+            this.jwtChangeButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.jwtChangeButton.ForeColor = System.Drawing.Color.Black;
+            this.jwtChangeButton.Highlight = true;
+            this.jwtChangeButton.Location = new System.Drawing.Point(172, 71);
+            this.jwtChangeButton.Name = "jwtChangeButton";
+            this.jwtChangeButton.Size = new System.Drawing.Size(100, 26);
+            this.jwtChangeButton.Style = MetroFramework.MetroColorStyle.Black;
+            this.jwtChangeButton.TabIndex = 9;
+            this.jwtChangeButton.Text = "Change";
+            this.jwtChangeButton.UseCustomBackColor = true;
+            this.jwtChangeButton.UseCustomForeColor = true;
+            this.jwtChangeButton.UseSelectable = true;
+            this.jwtChangeButton.UseStyleColors = true;
+            // 
+            // nextRollTime
+            // 
+            this.nextRollTime.AutoSize = true;
+            this.nextRollTime.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.nextRollTime.Location = new System.Drawing.Point(166, 42);
+            this.nextRollTime.Name = "nextRollTime";
+            this.nextRollTime.Size = new System.Drawing.Size(106, 25);
+            this.nextRollTime.TabIndex = 8;
+            this.nextRollTime.Text = "00h:00m:00s";
+            this.nextRollTime.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // nextRoll
+            // 
+            this.nextRoll.AutoSize = true;
+            this.nextRoll.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.nextRoll.Location = new System.Drawing.Point(14, 42);
+            this.nextRoll.Name = "nextRoll";
+            this.nextRoll.Size = new System.Drawing.Size(95, 25);
+            this.nextRoll.TabIndex = 7;
+            this.nextRoll.Text = "Next roll in";
+            this.nextRoll.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // autoSpinLabel
             // 
@@ -130,27 +175,53 @@
             this.autoSpinToggle.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.autoSpinToggle.UseSelectable = true;
             // 
-            // nextRoll
+            // jwtTextBox
             // 
-            this.nextRoll.AutoSize = true;
-            this.nextRoll.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.nextRoll.Location = new System.Drawing.Point(14, 42);
-            this.nextRoll.Name = "nextRoll";
-            this.nextRoll.Size = new System.Drawing.Size(95, 25);
-            this.nextRoll.TabIndex = 7;
-            this.nextRoll.Text = "Next roll in";
-            this.nextRoll.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // nextRollTime
             // 
-            this.nextRollTime.AutoSize = true;
-            this.nextRollTime.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.nextRollTime.Location = new System.Drawing.Point(166, 42);
-            this.nextRollTime.Name = "nextRollTime";
-            this.nextRollTime.Size = new System.Drawing.Size(106, 25);
-            this.nextRollTime.TabIndex = 8;
-            this.nextRollTime.Text = "00h:00m:00s";
-            this.nextRollTime.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            this.jwtTextBox.CustomButton.Image = null;
+            this.jwtTextBox.CustomButton.Location = new System.Drawing.Point(131, 1);
+            this.jwtTextBox.CustomButton.Name = "";
+            this.jwtTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.jwtTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.jwtTextBox.CustomButton.TabIndex = 1;
+            this.jwtTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.jwtTextBox.CustomButton.UseSelectable = true;
+            this.jwtTextBox.CustomButton.Visible = false;
+            this.jwtTextBox.Lines = new string[0];
+            this.jwtTextBox.Location = new System.Drawing.Point(20, 73);
+            this.jwtTextBox.MaxLength = 32767;
+            this.jwtTextBox.Name = "jwtTextBox";
+            this.jwtTextBox.PasswordChar = '*';
+            this.jwtTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.jwtTextBox.SelectedText = "";
+            this.jwtTextBox.SelectionLength = 0;
+            this.jwtTextBox.SelectionStart = 0;
+            this.jwtTextBox.ShortcutsEnabled = true;
+            this.jwtTextBox.Size = new System.Drawing.Size(153, 23);
+            this.jwtTextBox.TabIndex = 10;
+            this.jwtTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.jwtTextBox.UseSelectable = true;
+            this.jwtTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.jwtTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // jwtButtonExit
+            // 
+            this.jwtButtonExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.jwtButtonExit.FontSize = MetroFramework.MetroButtonSize.Tall;
+            this.jwtButtonExit.ForeColor = System.Drawing.Color.Black;
+            this.jwtButtonExit.Highlight = true;
+            this.jwtButtonExit.Location = new System.Drawing.Point(229, 71);
+            this.jwtButtonExit.Name = "jwtButtonExit";
+            this.jwtButtonExit.Size = new System.Drawing.Size(40, 26);
+            this.jwtButtonExit.Style = MetroFramework.MetroColorStyle.Black;
+            this.jwtButtonExit.TabIndex = 11;
+            this.jwtButtonExit.Text = "X";
+            this.jwtButtonExit.UseCustomBackColor = true;
+            this.jwtButtonExit.UseCustomForeColor = true;
+            this.jwtButtonExit.UseSelectable = true;
+            this.jwtButtonExit.UseStyleColors = true;
             // 
             // Window
             // 
@@ -183,6 +254,9 @@
         private MetroFramework.Controls.MetroProgressSpinner progressSpinner;
         private MetroFramework.Controls.MetroLabel nextRollTime;
         private MetroFramework.Controls.MetroLabel nextRoll;
+        private MetroFramework.Controls.MetroButton jwtChangeButton;
+        private MetroFramework.Controls.MetroTextBox jwtTextBox;
+        private MetroFramework.Controls.MetroButton jwtButtonExit;
     }
 }
 

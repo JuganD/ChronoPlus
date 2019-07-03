@@ -21,7 +21,7 @@ namespace ChronoPlus.Lightweight.Windows
             this.Resizable = false;
 
             SetNextRollTime();
-            ScreenBoundsAndPointInitialize();
+            InitializeFormSettings();
             
             // Config
             InitializeAllConfigValues();
@@ -33,11 +33,13 @@ namespace ChronoPlus.Lightweight.Windows
             if (!this.ManualControl)
             {
                 DisplayPopUpAnimation();
-                InitializeChronoComponents();
+                ApplyJwt();
             }
+            // its important to be the last one, so that events don't fire from the program
+            InitializeJwtHandlers();
         }
 
-        private void ScreenBoundsAndPointInitialize()
+        private void InitializeFormSettings()
         {
             this.screenBounds = Screen.FromControl(this).Bounds;
 
@@ -46,6 +48,13 @@ namespace ChronoPlus.Lightweight.Windows
             this.Location = this.InvisiblePoint;
         }
 
+        private void InitializeJwtHandlers()
+        {
+            this.jwtTextBox.TextChanged += JwtTextBox_TextChanged;
+            this.jwtTextBox.LostFocus += JwtButtonExitEvent;
+            this.jwtButtonExit.Click += JwtButtonExitEvent;
+            this.jwtChangeButton.Click += JwtChangeButton_Click;
+        }
         public static void Kill()
         {
             try
