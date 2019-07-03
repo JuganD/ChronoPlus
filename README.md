@@ -1,5 +1,6 @@
 <p align="center">
   <h3 align="center">Chrono+</h3>
+  [![Build Status](https://travis-ci.com/JuganD/ChronoPlus.svg?token=ytDmLhFdCaPPDKBEsY1o&branch=master)](https://travis-ci.com/JuganD/ChronoPlus)
   <p align="center">
     Simple lightweight request-response oriented agent for Chrono.gg API.
 	Currently in early alpha stage, providing only windows .net framework support.
