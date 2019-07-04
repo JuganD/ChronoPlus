@@ -51,9 +51,9 @@ namespace ChronoPlus.Lightweight.Windows
         private void InitializeJwtHandlers()
         {
             this.jwtTextBox.TextChanged += JwtTextBox_TextChanged;
-            this.jwtTextBox.LostFocus += JwtButtonExitEvent;
             this.jwtButtonExit.Click += JwtButtonExitEvent;
             this.jwtChangeButton.Click += JwtChangeButton_Click;
+            //this.jwtTextBox.LostFocus += JwtButtonExitEvent; // conflicts with jwtChangeButton.Click
         }
         public static void Kill()
         {
