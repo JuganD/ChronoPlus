@@ -329,3 +329,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/ChronoPlus.Lightweight.Windows/PrivateConfiguration.cs

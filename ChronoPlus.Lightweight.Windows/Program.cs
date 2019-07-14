@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoUpdaterDotNET;
 using ChronoPlus.Lightweight.Windows.CoreManagers;
 using Timer = System.Timers.Timer;
 
@@ -29,7 +30,22 @@ namespace ChronoPlus.Lightweight.Windows
             TimerManager timerManager = new TimerManager();
             IconManager iconManager = new IconManager();
 
+            // AutoUpdater initialization
+            try
+            {
+                AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
+                AutoUpdater.Start(PrivateConfiguration.UpdateUrl); // string URL to the zip file with the update
+            }
+            catch { }
+
             Application.Run();
+        }
+
+        private static void AutoUpdater_ApplicationExitEvent()
+        {
+            IconManager.icon.Dispose();
+            Window.Kill();
+            Application.Exit();
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

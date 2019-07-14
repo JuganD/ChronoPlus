@@ -32,7 +32,7 @@ namespace ChronoPlus.Lightweight.Windows
 
             if (!this.ManualControl)
             {
-                DisplayPopUpAnimation();
+                _ = DisplayPopUpAnimation();
                 ApplyJwt();
             }
             // its important to be the last one, so that events don't fire from the program
