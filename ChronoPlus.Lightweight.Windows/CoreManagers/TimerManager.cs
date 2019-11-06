@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using ChronoPlus.Controller.Models;
-using System.Timers;
 
 namespace ChronoPlus.Lightweight.Windows.CoreManagers
 {
@@ -61,12 +58,17 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
                                 {
                                     Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
                                 }
-                                // TODO: add option to raise information in window
-                                //Window wind = new Window(true);
-                                //await wind?.DisplayPopUpAnimation();
-                                //await wind?.GetChronoSpinModel(jwt);
-                                //wind?.PresentChronoSpinModel(spinInfo);
+                                // TODO: check for new offers
                             }
+                        }
+                        if (controller.ResponseResult == Result.InvalidToken)
+                        {
+                            if (IconManager.icon != null)
+                                IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Invalid/expired JWT token!", System.Windows.Forms.ToolTipIcon.Error);
+                        } else if (controller.ResponseResult == Result.Unknown)
+                        {
+                            if (IconManager.icon != null)
+                                IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Chrono spin not successful, check your internet connection!", System.Windows.Forms.ToolTipIcon.Error);
                         }
                     }
                 }

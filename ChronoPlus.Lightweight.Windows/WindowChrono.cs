@@ -41,7 +41,7 @@ namespace ChronoPlus.Lightweight.Windows
                 this.autoSpinToggle.Enabled = true;
                 FileManager fm = new FileManager();
                 fm.SaveJWT(jwt);
-                Kill();
+                Kill(); // to trigger all window startup events
                 Program.StartNewWindow();
             }
         }
@@ -56,9 +56,9 @@ namespace ChronoPlus.Lightweight.Windows
                 ChangeLabelText(labels[2], "Last Spin: " + model.Coins.LastSpin.ToLocalTime()
                                      .ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
             }
-            catch
+            catch (NullReferenceException)
             {
-
+                ChangeLabelText(labels[0], "Invalid JWT token or the server refused the request.");
             }
 
 
