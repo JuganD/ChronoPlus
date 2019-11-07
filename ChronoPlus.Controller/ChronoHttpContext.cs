@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Net.Http;
 using ChronoPlus.Controller.Abstraction;
 
@@ -35,9 +34,23 @@ namespace ChronoPlus.Controller
 
         public IChronoInformationSegment Model { get; }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Response?.Dispose();
+            }
+        }
+
         public void Dispose()
         {
-            this.Response?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~ChronoHttpContext()
+        {
+            Dispose(false);
         }
     }
 }
