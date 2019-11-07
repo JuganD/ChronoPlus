@@ -85,6 +85,17 @@ namespace ChronoPlus.Controller
         }
 
         /// <summary>
+        ///     Sends new Offers request with Offers default settings.
+        /// </summary>
+        public ChronoOffersInformationModel CheckOffers()
+        {
+            this.Method = ChronoMethod.Offers;
+            this._settings.PrepareWithDefaultSettings(ChronoMethod.Offers);
+            SendRequest();
+            return (ChronoOffersInformationModel)this.HttpContext.Model;
+        }
+
+        /// <summary>
         ///     Sends new request with current Method's default settings.
         /// </summary>
         public void SendDefaultRequest()

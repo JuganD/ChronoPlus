@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using ChronoPlus.Controller.Abstraction;
 using ChronoPlus.Controller.Models;
 using ChronoPlus.Core.Enums;
@@ -25,6 +26,9 @@ namespace ChronoPlus.Controller
                     case ChronoMethod.Check:
                         var objCheck = JsonConvert.DeserializeObject<ChronoCheckInformationModel>(jsonResponse);
                         return new ChronoHttpContext(objCheck, response, jsonResponse);
+                    case ChronoMethod.Offers:
+                        var objOffers = JsonConvert.DeserializeObject<List<ChronoOfferInformationModel>>(jsonResponse);
+                        return new ChronoHttpContext(new ChronoOffersInformationModel() { Offers = objOffers }, response, jsonResponse);
                     default:
                         return new ChronoHttpContext(response, jsonResponse);
                 }

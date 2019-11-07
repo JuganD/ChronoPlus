@@ -4,6 +4,7 @@
     {
         None = 1,
         Spin = 2,
-        Check = 3
+        Check = 3,
+        Offers = 4
     }
 }

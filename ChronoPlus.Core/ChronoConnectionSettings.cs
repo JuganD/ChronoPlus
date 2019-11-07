@@ -39,15 +39,18 @@ namespace ChronoPlus.Core
             {
                 case ChronoMethod.Spin:
                     this.Url = "https://api.chrono.gg/quest/spin";
-                    DefineHeader("Accept", "application/json");
-                    DefineHeader("Authorization", "JWT " + this.AuthenticationKey);
                     break;
                 case ChronoMethod.Check:
                     this.Url = "https://api.chrono.gg/account";
-                    DefineHeader("Accept", "application/json");
-                    DefineHeader("Authorization", "JWT " + this.AuthenticationKey);
+                    break;
+                case ChronoMethod.Offers:
+                    this.Url = "https://api.chrono.gg/shop";
                     break;
             }
+
+            // Authorization and json requirement. Currently used by all ChronoMethods.
+            DefineHeader("Accept", "application/json");
+            DefineHeader("Authorization", "JWT " + this.AuthenticationKey);
 
             DefineHeader("Referer", "https://www.chrono.gg/");
             DefineHeader("Origin", "https://www.chrono.gg");
