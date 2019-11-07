@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using ChronoPlus.Controller;
+﻿using ChronoPlus.Controller;
 using ChronoPlus.Core.Abstraction;
 
 namespace ChronoPlus.Lightweight.Windows

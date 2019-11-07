@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using ChronoPlus.Controller.Models;
 using ChronoPlus.Lightweight.Windows.CoreManagers;
 using MetroFramework;
 using MetroFramework.Controls;
-using MetroFramework.Interfaces;
-using Label = System.Reflection.Emit.Label;
 
 namespace ChronoPlus.Lightweight.Windows
 {

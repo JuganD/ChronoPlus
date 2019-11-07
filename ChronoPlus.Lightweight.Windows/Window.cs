@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ChronoPlus.Lightweight.Windows.CoreManagers;
 using MetroFramework.Forms;
 
 namespace ChronoPlus.Lightweight.Windows
@@ -53,6 +52,7 @@ namespace ChronoPlus.Lightweight.Windows
             this.jwtTextBox.TextChanged += JwtTextBox_TextChanged;
             this.jwtButtonExit.Click += JwtButtonExitEvent;
             this.jwtChangeButton.Click += JwtChangeButton_Click;
+            this.jwtVoteNowButton.Click += JwtVoteNowButton_Click;
             //this.jwtTextBox.LostFocus += JwtButtonExitEvent; // conflicts with jwtChangeButton.Click
         }
         public static void Kill()
