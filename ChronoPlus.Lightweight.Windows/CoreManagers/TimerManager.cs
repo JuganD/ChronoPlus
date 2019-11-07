@@ -80,13 +80,13 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
         public static int GetRemainingTime()
         {
             DateTime now = DateTime.UtcNow;
-            DateTime fourOClock = DateTime.Today.AddHours(16).AddMinutes(1);
+            DateTime fiveOClock = DateTime.Today.AddHours(17).AddMinutes(1);
 
-            if (now > fourOClock)
+            if (now > fiveOClock)
             {
-                fourOClock = fourOClock.AddDays(1.0);
+                fiveOClock = fiveOClock.AddDays(1.0);
             }
-            int msUntilFour = (int)((fourOClock - now).TotalMilliseconds);
+            int msUntilFour = (int)((fiveOClock - now).TotalMilliseconds);
 
             return msUntilFour;
         }
