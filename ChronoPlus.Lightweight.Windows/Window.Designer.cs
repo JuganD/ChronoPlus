@@ -33,6 +33,9 @@
             this.informationPanel = new MetroFramework.Controls.MetroPanel();
             this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
+            this.jwtVoteNowButton = new MetroFramework.Controls.MetroButton();
+            this.runOnStartupLabel = new MetroFramework.Controls.MetroLabel();
+            this.runOnStartupToggle = new MetroFramework.Controls.MetroToggle();
             this.jwtChangeButton = new MetroFramework.Controls.MetroButton();
             this.nextRollTime = new MetroFramework.Controls.MetroLabel();
             this.nextRoll = new MetroFramework.Controls.MetroLabel();
@@ -40,8 +43,7 @@
             this.autoSpinToggle = new MetroFramework.Controls.MetroToggle();
             this.jwtTextBox = new MetroFramework.Controls.MetroTextBox();
             this.jwtButtonExit = new MetroFramework.Controls.MetroButton();
-            this.runOnStartupLabel = new MetroFramework.Controls.MetroLabel();
-            this.runOnStartupToggle = new MetroFramework.Controls.MetroToggle();
+            this.jwtVoteNowLabel = new MetroFramework.Controls.MetroLabel();
             this.informationPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +95,8 @@
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.jwtVoteNowLabel);
+            this.buttonsPanel.Controls.Add(this.jwtVoteNowButton);
             this.buttonsPanel.Controls.Add(this.runOnStartupLabel);
             this.buttonsPanel.Controls.Add(this.runOnStartupToggle);
             this.buttonsPanel.Controls.Add(this.jwtChangeButton);
@@ -114,6 +118,48 @@
             this.buttonsPanel.VerticalScrollbarBarColor = true;
             this.buttonsPanel.VerticalScrollbarHighlightOnWheel = false;
             this.buttonsPanel.VerticalScrollbarSize = 10;
+            // 
+            // jwtVoteNowButton
+            // 
+            this.jwtVoteNowButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.jwtVoteNowButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.jwtVoteNowButton.ForeColor = System.Drawing.Color.Black;
+            this.jwtVoteNowButton.Highlight = true;
+            this.jwtVoteNowButton.Location = new System.Drawing.Point(20, 112);
+            this.jwtVoteNowButton.Name = "jwtVoteNowButton";
+            this.jwtVoteNowButton.Size = new System.Drawing.Size(249, 27);
+            this.jwtVoteNowButton.Style = MetroFramework.MetroColorStyle.Black;
+            this.jwtVoteNowButton.TabIndex = 14;
+            this.jwtVoteNowButton.Text = "Vote Now";
+            this.jwtVoteNowButton.UseCustomBackColor = true;
+            this.jwtVoteNowButton.UseCustomForeColor = true;
+            this.jwtVoteNowButton.UseSelectable = true;
+            this.jwtVoteNowButton.UseStyleColors = true;
+            // 
+            // runOnStartupLabel
+            // 
+            this.runOnStartupLabel.AutoSize = true;
+            this.runOnStartupLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.runOnStartupLabel.Location = new System.Drawing.Point(14, 271);
+            this.runOnStartupLabel.Name = "runOnStartupLabel";
+            this.runOnStartupLabel.Size = new System.Drawing.Size(125, 25);
+            this.runOnStartupLabel.TabIndex = 13;
+            this.runOnStartupLabel.Text = "Run on startup";
+            this.runOnStartupLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // runOnStartupToggle
+            // 
+            this.runOnStartupToggle.AutoSize = true;
+            this.runOnStartupToggle.Checked = true;
+            this.runOnStartupToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.runOnStartupToggle.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.runOnStartupToggle.Location = new System.Drawing.Point(189, 277);
+            this.runOnStartupToggle.Name = "runOnStartupToggle";
+            this.runOnStartupToggle.Size = new System.Drawing.Size(80, 17);
+            this.runOnStartupToggle.TabIndex = 12;
+            this.runOnStartupToggle.Text = "On";
+            this.runOnStartupToggle.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.runOnStartupToggle.UseSelectable = true;
             // 
             // jwtChangeButton
             // 
@@ -227,30 +273,18 @@
             this.jwtButtonExit.UseSelectable = true;
             this.jwtButtonExit.UseStyleColors = true;
             // 
-            // runOnStartupLabel
+            // jwtVoteNowLabel
             // 
-            this.runOnStartupLabel.AutoSize = true;
-            this.runOnStartupLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.runOnStartupLabel.Location = new System.Drawing.Point(14, 271);
-            this.runOnStartupLabel.Name = "runOnStartupLabel";
-            this.runOnStartupLabel.Size = new System.Drawing.Size(125, 25);
-            this.runOnStartupLabel.TabIndex = 13;
-            this.runOnStartupLabel.Text = "Run on startup";
-            this.runOnStartupLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // runOnStartupToggle
-            // 
-            this.runOnStartupToggle.AutoSize = true;
-            this.runOnStartupToggle.Checked = true;
-            this.runOnStartupToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.runOnStartupToggle.FontSize = MetroFramework.MetroLinkSize.Medium;
-            this.runOnStartupToggle.Location = new System.Drawing.Point(189, 277);
-            this.runOnStartupToggle.Name = "runOnStartupToggle";
-            this.runOnStartupToggle.Size = new System.Drawing.Size(80, 17);
-            this.runOnStartupToggle.TabIndex = 12;
-            this.runOnStartupToggle.Text = "On";
-            this.runOnStartupToggle.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.runOnStartupToggle.UseSelectable = true;
+            this.jwtVoteNowLabel.ForeColor = System.Drawing.Color.IndianRed;
+            this.jwtVoteNowLabel.Location = new System.Drawing.Point(20, 146);
+            this.jwtVoteNowLabel.Name = "jwtVoteNowLabel";
+            this.jwtVoteNowLabel.Size = new System.Drawing.Size(249, 24);
+            this.jwtVoteNowLabel.Style = MetroFramework.MetroColorStyle.Black;
+            this.jwtVoteNowLabel.TabIndex = 15;
+            this.jwtVoteNowLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.jwtVoteNowLabel.UseCustomBackColor = true;
+            this.jwtVoteNowLabel.UseCustomForeColor = true;
+            this.jwtVoteNowLabel.UseStyleColors = true;
             // 
             // Window
             // 
@@ -288,6 +322,8 @@
         private MetroFramework.Controls.MetroButton jwtButtonExit;
         private MetroFramework.Controls.MetroLabel runOnStartupLabel;
         private MetroFramework.Controls.MetroToggle runOnStartupToggle;
+        private MetroFramework.Controls.MetroButton jwtVoteNowButton;
+        private MetroFramework.Controls.MetroLabel jwtVoteNowLabel;
     }
 }
 

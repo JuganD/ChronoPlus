@@ -66,5 +66,11 @@ namespace ChronoPlus.Lightweight.Windows
         {
             ApplyJwt(this.jwtTextBox.Text);
         }
+        private void JwtVoteNowButton_Click(object sender, EventArgs e)
+        {
+            Kill();
+            Program.StartNewWindow();
+            // TODO: use the added jwtVoteNowLabel to show the result of this action
+        }
     }
 }
