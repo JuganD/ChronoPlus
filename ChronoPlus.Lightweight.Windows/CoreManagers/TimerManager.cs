@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using ChronoPlus.Controller.Models;
 
 namespace ChronoPlus.Lightweight.Windows.CoreManagers
@@ -118,31 +119,34 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
 
                 if (newOffers.Any())
                 {
-                    if (IconManager.icon != null)
+                    Task.Run(async () =>
                     {
-                        string newOffersMessage = "New offers available!";
-
-                        // Write the name of every offer if they are lower than 5
-                        // (we don't want to write 100 offers for example)
-                        if (newOffers.Count() <= 5) 
+                        await Task.Delay(8000);
+                        if (IconManager.icon != null)
                         {
-                            newOffersMessage += " (" + string.Join(", ", newOffers.Select(x => x.Name)) + ")";
+                            string newOffersMessage = "New offers available!";
+
+                            // Write the name of every offer if they are lower than 5
+                            // (we don't want to write 100 offers for example)
+                            if (newOffers.Count() <= 5)
+                            {
+                                newOffersMessage += " (" + string.Join(", ", newOffers.Select(x => x.Name)) + ")";
+                            }
+
+                            IconManager.BalloonTipClickedAction = delegate
+                            {
+                                System.Diagnostics.Process.Start("https://www.chrono.gg/shop");
+                            };
+                            IconManager.icon.ShowBalloonTip(5000, "Chrono+",
+                                newOffersMessage,
+                                System.Windows.Forms.ToolTipIcon.Info);
+
+                            ConfigManager.Config["offersLastCheck"] = DateTime.UtcNow.ToString();
+                            new ConfigManager().SaveConfig();
                         }
-
-                        IconManager.BalloonTipClickedAction = delegate
-                        {
-                            System.Diagnostics.Process.Start("https://www.chrono.gg/shop");
-                        };
-                        IconManager.icon.ShowBalloonTip(5000, "Chrono+",
-                            newOffersMessage,
-                            System.Windows.Forms.ToolTipIcon.Info);
-                        
-                    }
+                    });
                 }
             }
-
-            ConfigManager.Config["offersLastCheck"] = DateTime.UtcNow.ToString();
-            new ConfigManager().SaveConfig();
         }
     }
 }
