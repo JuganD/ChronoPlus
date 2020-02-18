@@ -117,7 +117,7 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
                              && x.SoldOut == false
                              && x.CreatedOn > lastCheckTime);
 
-                if (newOffers.Any())
+                if (newOffers != null && newOffers.Any())
                 {
                     Task.Run(async () =>
                     {
