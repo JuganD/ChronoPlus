@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChronoPlus.Lightweight.Windows.CoreManagers;
+using System;
 using System.Threading.Tasks;
 
 namespace ChronoPlus.Lightweight.Windows
@@ -68,7 +69,7 @@ namespace ChronoPlus.Lightweight.Windows
         }
         private void JwtVoteNowButton_Click(object sender, EventArgs e)
         {
-            Kill();
+            new VoteManager(false);
             Program.StartNewWindow();
             // TODO: use the added jwtVoteNowLabel to show the result of this action
         }
