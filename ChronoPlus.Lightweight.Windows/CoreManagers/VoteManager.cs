@@ -5,21 +5,27 @@ using ChronoPlus.Controller.Models;
 
 namespace ChronoPlus.Lightweight.Windows.CoreManagers
 {
-    public class TimerManager
+    public class VoteManager
     {
         private System.Windows.Forms.Timer timer;
-        public TimerManager()
+        public VoteManager(bool startTimer = true)
         {
-            timer = new System.Windows.Forms.Timer();
+            if (startTimer)
+            {
+                timer = new System.Windows.Forms.Timer();
 
-            timer.Interval = GetRemainingTime();
-            timer.Tick += CallBack;
-            timer.Start();
+                timer.Interval = GetRemainingTime();
+                timer.Tick += CallBack;
+                timer.Start();
+            }
+
             CallBack(null, null);
         }
         private void CallBack(object sender, EventArgs e)
         {
-            timer.Stop();
+            if (this.timer != null)
+                this.timer.Stop();
+
             if (ConfigManager.GetConfigBool("autoSpinToggle") != false)
             {
                 if (Window.currentWindow != null)
@@ -78,8 +84,12 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
                     }
                 }
             }
-            this.timer.Interval = GetRemainingTime();
-            timer.Start();
+            
+            if (this.timer != null)
+            {
+                this.timer.Interval = GetRemainingTime();
+                this.timer.Start();
+            }
         }
 
         public static int GetRemainingTime()
