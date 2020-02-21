@@ -90,7 +90,7 @@
     <Compile Include="CoreManagers\IconManager.cs" />
     <Compile Include="CoreManagers\LocationVariables.cs" />
     <Compile Include="CoreManagers\RegistryManager.cs" />
-    <Compile Include="CoreManagers\TimerManager.cs" />
+    <Compile Include="CoreManagers\VoteManager.cs" />
     <Compile Include="CoreManagers\FileManager.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="PrivateConfiguration.cs" />
