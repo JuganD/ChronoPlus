@@ -20,9 +20,9 @@ namespace ChronoPlus.Lightweight.Windows
             ConfigManager configManager = new ConfigManager();
             configManager.LoadConfig();
 
-            // Instantiate iconManager before timerManager -> icon needed for initial error messages
+            // Instantiate iconManager before voteManager -> icon needed for initial error messages
             IconManager iconManager = new IconManager();
-            TimerManager timerManager = new TimerManager();
+            VoteManager voteManager = new VoteManager();
 
             // AutoUpdater initialization
             try
