@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using ChronoPlus.Controller.Models;
 
@@ -7,7 +9,8 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
 {
     public class VoteManager
     {
-        private System.Windows.Forms.Timer timer;
+        private static System.Windows.Forms.Timer timer;
+        private static DateTime TimerStartTime;
         public VoteManager(bool startTimer = true)
         {
             if (startTimer)
@@ -16,6 +19,7 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
 
                 timer.Interval = GetRemainingTime();
                 timer.Tick += CallBack;
+                TimerStartTime = DateTime.UtcNow;
                 timer.Start();
             }
 
@@ -23,9 +27,10 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
         }
         private void CallBack(object sender, EventArgs e)
         {
-            if (this.timer != null)
-                this.timer.Stop();
+            if (timer != null)
+                timer.Stop();
 
+            bool supressTimer = false; // in case of error, we can pick different time
             if (ConfigManager.GetConfigBool("autoSpinToggle") != false)
             {
                 if (Window.currentWindow != null)
@@ -37,62 +42,93 @@ namespace ChronoPlus.Lightweight.Windows.CoreManagers
                 if (fm.IsJwtPresent)
                 {
                     string jwt = fm.ReadJwt();
-                    using (Controller controller = new Controller(jwt))
+                    try
                     {
-                        ChronoCoinInformationModel spinInfo = controller.SpinCoin();
-                        // FOR TESTING PURPOSE
-                        //new ChronoCoinInformationModel()
-                        //{
-                        //    Chest = new ChronoCoinChestInformationModel()
-                        //    {
-                        //        RewardBonus = 5,
-                        //        RewardValue = 10
-                        //    },
-                        //    Quest = new ChronoCoinQuestInformationModel()
-                        //    {
-                        //        RewardValue = 7,
-                        //        RewardBonus = 3
-                        //    }
-                        //};
-                        if (spinInfo != null)
+                        using (Controller controller = new Controller(jwt))
                         {
-                            int questCoins = spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue;
-                            int chestCoins = spinInfo.Chest.RewardBonus + spinInfo.Chest.RewardValue;
-                            if (questCoins > 0)
+                            ChronoCoinInformationModel spinInfo = controller.SpinCoin();
+                            // FOR TESTING PURPOSE
+                            //new ChronoCoinInformationModel()
+                            //{
+                            //    Chest = new ChronoCoinChestInformationModel()
+                            //    {
+                            //        RewardBonus = 5,
+                            //        RewardValue = 10
+                            //    },
+                            //    Quest = new ChronoCoinQuestInformationModel()
+                            //    {
+                            //        RewardValue = 7,
+                            //        RewardBonus = 3
+                            //    }
+                            //};
+                            if (spinInfo != null)
                             {
-                                Window.InsertedLabels.Add("[2]Last coin spin");
-                                Window.InsertedLabels.Add("    From daily spin: " + questCoins);
-                                if (chestCoins > 0)
+                                int questCoins = spinInfo.Quest.RewardBonus + spinInfo.Quest.RewardValue;
+                                int chestCoins = spinInfo.Chest.RewardBonus + spinInfo.Chest.RewardValue;
+                                if (questCoins > 0)
                                 {
-                                    Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
+                                    Window.InsertedLabels.Add("[2]Last coin spin");
+                                    Window.InsertedLabels.Add("    From daily spin: " + questCoins);
+                                    if (chestCoins > 0)
+                                    {
+                                        Window.InsertedLabels.Add("    From chest reward: " + chestCoins);
+                                    }
                                 }
                             }
-                        }
 
-                        CheckOffersAndPromptNotification(controller);
+                            CheckOffersAndPromptNotification(controller);
 
-                        if (controller.ResponseResult == Result.InvalidToken)
-                        {
-                            if (IconManager.icon != null)
-                                IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Invalid/expired JWT token!", System.Windows.Forms.ToolTipIcon.Error);
+                            if (controller.ResponseResult == Result.InvalidToken)
+                            {
+                                if (IconManager.icon != null)
+                                    IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Invalid/expired JWT token!", System.Windows.Forms.ToolTipIcon.Error);
+                            }
+                            else if (controller.ResponseResult == Result.Unknown)
+                            {
+                                supressTimer = true;
+                                if (IconManager.icon != null)
+                                    IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Chrono spin not successful, check your internet connection!", System.Windows.Forms.ToolTipIcon.Error);
+                            }
                         }
-                        else if (controller.ResponseResult == Result.Unknown)
-                        {
-                            if (IconManager.icon != null)
-                                IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Chrono spin not successful, check your internet connection!", System.Windows.Forms.ToolTipIcon.Error);
-                        }
+                    }
+                    catch (HttpRequestException)
+                    {
+                        supressTimer = true;
+                        if (IconManager.icon != null)
+                            IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! Chrono+ request exception! Possible cause: invalid SSL or other network-related error!", System.Windows.Forms.ToolTipIcon.Error);
+                    }
+                    catch
+                    {
+                        supressTimer = true;
+                        if (IconManager.icon != null)
+                            IconManager.icon.ShowBalloonTip(3000, "Chrono+", "Error! An error occured while Chrono+ was voting! Voting unsuccessful.", System.Windows.Forms.ToolTipIcon.Error);
                     }
                 }
             }
-            
-            if (this.timer != null)
+            if (timer != null)
             {
-                this.timer.Interval = GetRemainingTime();
-                this.timer.Start();
+                if (!supressTimer)
+                {
+                    timer.Interval = GetRemainingTime();
+                    TimerStartTime = DateTime.UtcNow;
+                    timer.Start();
+                }
+                else
+                {
+                    // An error occured and we set shorter timespan for the timer
+                    // Set timer after an hour
+                    // User can always turn it off by switching off autospin
+                    timer.Interval = 3600000;
+                    TimerStartTime = DateTime.UtcNow;
+                    timer.Start();
+                }
             }
         }
-
-        public static int GetRemainingTime()
+        public static long GetVoteTimeLeftTicks()
+        {
+            return (TimerStartTime.AddMilliseconds(timer.Interval) - DateTime.UtcNow).Ticks;
+        }
+        public int GetRemainingTime()
         {
             DateTime now = DateTime.UtcNow;
             DateTime fiveOClock = DateTime.Today.AddHours(17).AddMinutes(1);

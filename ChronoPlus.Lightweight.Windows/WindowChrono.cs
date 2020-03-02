@@ -223,7 +223,7 @@ namespace ChronoPlus.Lightweight.Windows
         }
         private void SetNextRollTime()
         {
-            TimeSpan t = TimeSpan.FromMilliseconds(VoteManager.GetRemainingTime());
+            TimeSpan t = TimeSpan.FromTicks(VoteManager.GetVoteTimeLeftTicks());
             string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
                                     t.Hours,
                                     t.Minutes,
