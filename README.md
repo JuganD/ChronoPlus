@@ -29,7 +29,7 @@ That being said, I'm aiming for best code readability, where possible, and of co
 In order to process the requests to Chrono API, it is required that the user provides JSON Web Token (JWT) for Chrono.gg website ONLY!
 The JWT key can be acquired by typing `localStorage.getItem('jwt')` in the browser console, while you are in Chrono.gg website and successfully logged in.
 
-# Archived: As of mid 2020, Chrono.gg no longer offers free coin spins. Chrono.gg has officially ceased operation and will no longer provide any services.
+# Archived: As of mid and late 2020 -> Chrono.gg no longer offers free coin spins. Chrono.gg has officially ceased operation and will no longer provide any services.
 
 <!-- PACKAGES USED -->
 ## Packages Used
